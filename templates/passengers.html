@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Passengers{% endblock %}
+
+{% block styles %}
+    {% for item in passengers %}
+    .edit-{{ item.id }} {
+        display: none;
+    }
+    .passenger-{{ item.id }}:hover .edit-{{ item.id }} {
+        display: block;
+    }
+    {% endfor %}
+{% endblock %}
+{% block content %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Train Number</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in passengers %}
+        <tr class="passenger-{{ item.id }}">
+          <th scope="row">{{ item.id }}</th>
+          <td>{{ item.person.name }}</td>
+          <td>{{ item.train }}</td>
+          <td class="edit-{{ item.id }}">
+              <a href="/passengers/{{ item.id }}/edit/">
+                <i class="material-icons">mode_edit</i>
+              </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

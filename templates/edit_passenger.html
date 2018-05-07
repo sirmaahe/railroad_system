@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Edit passenger{% endblock %}
+
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+  <dl>
+    {{ render_field(form.name) }}
+    {{ render_field(form.train) }}
+  </dl>
+  <p><input type=submit value=Save>
+</form>
+{% endblock %}

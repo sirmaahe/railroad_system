@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Railroad management system{% endblock %}
+
+{% block styles %}
+    {% for item in queue %}
+    .edit-{{ item.id }} {
+        display: none;
+    }
+    .queue-{{ item.id }}:hover .edit-{{ item.id }} {
+        display: block;
+    }
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 offset-md-1">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Train Number</th>
+              <th scope="col">Line</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in queue %}
+            <tr class="queue-{{ item.id }}">
+              <th scope="row">{{ item.id }}</th>
+              <td>{{ item.train.number }}</td>
+              <td>{{ item.place }}</td>
+              <td class="edit-{{ item.id }}">
+                  <a href="/queue/{{ item.id }}/edit/">
+                    <i class="material-icons">mode_edit</i>
+                  </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    <div class="col-md-5 offset-md-1">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Train</th>
+              <th scope="col">Workers</th>
+              <th scope="col">Repairers</th>
+              <th scope="col">Machinery</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in lines %}
+            <tr class="queue-{{ item["id"] }}">
+              <th scope="row">{{ item["id"] }}</th>
+              <td>{{ item["train_number"] }}</td>
+              <td>{{ item["workers"] }}</td>
+              <td>{{ item["repairers"] }}</td>
+              <td>{{ item["machinery"] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
