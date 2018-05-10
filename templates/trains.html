@@ -2,17 +2,6 @@
 
 {% block title %}Railroad management system{% endblock %}
 
-{% block styles %}
-    {% for item in trains %}
-    .edit-{{ item.id }} {
-        display: none;
-    }
-    .train-{{ item.id }}:hover .edit-{{ item.id }} {
-        display: block;
-    }
-    {% endfor %}
-{% endblock %}
-
 {% block content %}
 <div class="col-md-5 offset-md-1">
     <table class="table">
@@ -23,7 +12,6 @@
           <th scope="col">Model</th>
           <th scope="col">Load</th>
           <th scope="col">Places</th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -34,11 +22,6 @@
           <td>{{ item.model }}</td>
           <td>{{ item.ftrain.load }}</td>
           <td>{{ item.ptrain.all_places }} {{ item.ptrain.occupied_places }}</td>
-          <td class="edit-{{ item.id }}">
-              <a href="/train/{{ item.id }}/edit/">
-                <i class="material-icons">mode_edit</i>
-              </a>
-          </td>
         </tr>
         {% endfor %}
       </tbody>

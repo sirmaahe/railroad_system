@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Workers{% endblock %}
+
+{% block styles %}
+    {% for item in workers %}
+    .edit-{{ item.id }} {
+        display: none;
+    }
+    .worker-{{ item.id }}:hover .edit-{{ item.id }} {
+        display: block;
+    }
+    {% endfor %}
+{% endblock %}
+{% block content %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Specialization</th>
+          <th scope="col">Line</th>
+          <th scope="col">Salary</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in workers %}
+        <tr class="worker-{{ item.id }}">
+          <th scope="row">{{ item.id }}</th>
+          <td>{{ item.person.name }}</td>
+          <td>{{ item.repairer.specialization }}</td>
+          <td>{{ item.line.id }}</td>
+          <td>{{ item.salary }}</td>
+          <td class="edit-{{ item.id }}">
+              <a href="/workers/{{ item.id }}/edit/">
+                <i class="material-icons">mode_edit</i>
+              </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
