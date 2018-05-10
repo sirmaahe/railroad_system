@@ -16,10 +16,9 @@ def main():
         'id': l[0],
         'train_number': l[1],
         'workers': l[2],
-        'repairers': l[3],
-        'machinery': l[4],
+        'machinery': l[3],
     } for l in select(
-        (l.id, l.train.number, count(l.workers), count(l.repairers), count(l.machinery)) for l in Line
+        (l.id, l.train.number, count(l.workers), count(l.machinery)) for l in Line
     )]
     return render_template('main.html', queue=queue, lines=lines)
 
@@ -62,10 +61,11 @@ def edit_passenger(passenger_id):
 @db_session
 def edit_worker(worker_id):
     worker = Worker[worker_id]
+    repairer = worker.repairer
     form = WorkerForm(request.form, data={
         'name': worker.person.name,
         'salary': worker.salary,
-        'specialization': worker.repairer.specialization,
+        'specialization': repairer.specialization if repairer else '',
         'line': worker.line,
     })
     if request.method == 'POST' and form.validate():
@@ -77,7 +77,7 @@ def edit_worker(worker_id):
 
         specialization = form.specialization.data
         if form.specialization.data:
-            if not worker.repairer:
+            if not repairer:
                 Repairer(worker=worker, specialization=specialization)
             else:
                 worker.specialization = specialization
